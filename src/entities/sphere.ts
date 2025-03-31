@@ -25,6 +25,10 @@ export class Sphere extends AbstractSphere {
 
 			}
 
+			this.hexagons = [];
+
+			this.generate();
+
 			this.radius = radius;
 
 		} catch ( e: unknown ) {
@@ -37,7 +41,24 @@ export class Sphere extends AbstractSphere {
 
 	private generate (): void {
 
-		
+		this.hexagons = [
+
+			{
+
+				points: [
+					
+					{ x: 0, y: 0.5, z: 0.75 },
+					{ x: 0.23, y: 0.12, z: 0.98 },
+					{ x: 0.6, y: 0.2, z: 0.8 },
+					{ x: 0.3, y: 0.2, z: 1 },
+					{ x: 0.1, y: 0.9, z: 0.3 },
+					{ x: 0, y: 0, z: 0 },
+
+				]
+
+			}
+
+		];
 
 	}
 

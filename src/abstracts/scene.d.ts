@@ -1,16 +1,11 @@
-import { type IPoint2D } from '../interfaces';
-import { AbstractCamera } from './camera';
+import { type IScene, type IPoint2D } from '../interfaces';
+import { AbstractCamera } from './camera.d';
+import { AbstractSphere } from './sphere.d';
 
-export abstract class AbstractScene {
-
-	abstract canvas: HTMLCanvasElement;
-
-	abstract center: IPoint2D;
+export abstract class AbstractScene implements IScene {
 
 	abstract camera: AbstractCamera;
 
-	abstract render (): void;
-
-	abstract clear (): void;
+	abstract sphere: AbstractSphere;
 
 };

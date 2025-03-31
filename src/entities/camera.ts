@@ -9,7 +9,7 @@ export class Camera extends AbstractCamera {
 
 	z!: number;
 
-	constructor( rotation: ICamera, z: number ) {
+	constructor( rotation: ICamera ) {
 
 		super();
 
@@ -19,7 +19,7 @@ export class Camera extends AbstractCamera {
 			this.pitch = rotation?.pitch || 0;
 			this.roll = rotation?.roll || 0;
 
-			this.z = z || 0;
+			this.z = rotation?.z || 0;
 
 		} catch ( e: unknown ) {
 
