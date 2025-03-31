@@ -1,14 +1,16 @@
 import { type IPoint2D } from '../interfaces';
-import { AbstractScene, AbstractCamera } from '../abstracts';
+import { AbstractScene } from '../abstracts';
 import { Camera } from './camera';
 
 export class Scene extends AbstractScene {
 
 	canvas!: HTMLCanvasElement;
 
+	private ctx!: CanvasRenderingContext2D;
+
 	center!: IPoint2D;
 
-	camera!: AbstractCamera;
+	camera!: Camera;
 
 	ro!: ResizeObserver;
 
@@ -32,6 +34,16 @@ export class Scene extends AbstractScene {
 
 			this.canvas = canvas;
 			this.camera = camera;
+
+			const ctx: CanvasRenderingContext2D | null = this.canvas.getContext( '2d' );
+
+			if ( !ctx ) {
+
+				throw new Error( 'Scene -> constructor :: invalid canvas context' );
+
+			}
+
+			this.ctx = ctx;
 
 			this.ro = new ResizeObserver( () => {
 
@@ -58,6 +70,8 @@ export class Scene extends AbstractScene {
 	}
 
 	clear (): void {
+
+		this.ctx.clearRect( 0, 0, this.canvas.width, this.canvas.height );
 
 	}
 

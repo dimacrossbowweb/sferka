@@ -1,15 +1,15 @@
-import { type IPoint2D, type IPoint3D } from '../interfaces';
+import { type ICamera } from '../interfaces';
 
-export abstract class AbstractCamera implements IPoint2D {
+export abstract class AbstractCamera implements ICamera {
 
-	abstract x: number;
-	abstract y: number;
+	abstract yaw: number;
+	abstract pitch: number;
+	abstract roll: number;
+
 	abstract z: number;
 
-	abstract scale: number;
+	abstract rotate( rotation: ICamera ): void;
 
-	abstract rotate( value: IPoint3D ): void;
-
-	abstract zoom( value: number ): void;
+	abstract zoom( z: number ): void;
 
 };

@@ -1,41 +1,25 @@
-import { type IPoint3D } from '../interfaces';
+import { type ICamera } from '../interfaces';
 import { AbstractCamera } from '../abstracts';
 
 export class Camera extends AbstractCamera {
 
-	x!: number;
-	y!: number;
+	yaw!: number;
+	pitch!: number;
+	roll!: number;
+
 	z!: number;
 
-	scale!: number;
-
-	constructor( position: IPoint3D, scale: number ) {
+	constructor( rotation: ICamera, z: number ) {
 
 		super();
 
 		try {
 
-			this.x = position?.x || 0;
-			this.y = position?.y || 0;
-			this.z = position?.z || 0;
+			this.yaw = rotation?.yaw || 0;
+			this.pitch = rotation?.pitch || 0;
+			this.roll = rotation?.roll || 0;
 
-			this.scale = scale || 0;
-
-		} catch ( e: unknown ) {
-
-			console.error( e );
-
-		}
-
-	}
-
-	rotate( value: IPoint3D ): void {
-
-		try {
-
-			this.x = value?.x || 0;
-			this.y = value?.y || 0;
-			this.z = value?.z || 0;
+			this.z = z || 0;
 
 		} catch ( e: unknown ) {
 
@@ -45,11 +29,27 @@ export class Camera extends AbstractCamera {
 
 	}
 
-	zoom( value: number ): void {
+	rotate( rotation: ICamera ): void {
 
 		try {
 
-			this.scale = value || 0;
+			this.yaw = rotation?.yaw || 0;
+			this.pitch = rotation?.pitch || 0;
+			this.roll = rotation?.roll || 0;
+
+		} catch ( e: unknown ) {
+
+			console.error( e );
+
+		}
+
+	}
+
+	zoom( z: number ): void {
+
+		try {
+
+			this.z = z || 0;
 
 		} catch ( e: unknown ) {
 
