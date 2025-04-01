@@ -114,13 +114,15 @@ export class Renderer extends AbstractRenderer {
 			// const center: IPoint2D = { x: 0, y: 0 };
 			const center: IPoint2D = { x: Math.round( width / 2 ), y: Math.round( height / 2 ) };
 
+			const size: number = Math.min( width / 2, height / 2 );
+
 			ctx.beginPath();
 
-			ctx.moveTo( points[ 0 ].x * 100 + center.x, points[ 0 ].y * 100 + center.y );
+			ctx.moveTo( points[ 0 ].x * size + center.x, points[ 0 ].y * size + center.y );
 
 			for ( let i: number = 1; i < points.length; i++ ) {
 
-				ctx.lineTo( points[ i ].x * 100 + center.x, points[ i ].y * 100 + center.y );
+				ctx.lineTo( points[ i ].x * size + center.x, points[ i ].y * size + center.y );
 
 			}
 
