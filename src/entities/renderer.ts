@@ -73,8 +73,6 @@ export class Renderer extends AbstractRenderer {
 
 			ctx.clearRect( 0, 0, width, height );
 
-			ctx.rect( 0, 0, width, height );
-
 
 		} catch ( e: unknown ) {
 
@@ -87,6 +85,8 @@ export class Renderer extends AbstractRenderer {
 	private drawHexagon (
 		
 		ctx: CanvasRenderingContext2D,
+		width: number,
+		height: number,
 		scene: Scene,
 		hex: IHex
 	
@@ -111,22 +111,21 @@ export class Renderer extends AbstractRenderer {
 
 			];
 
-			console.log( 'POINTS' );
-			console.log( points );
+			// const center: IPoint2D = { x: 0, y: 0 };
+			const center: IPoint2D = { x: Math.round( width / 2 ), y: Math.round( height / 2 ) };
 
 			ctx.beginPath();
 
-			ctx.moveTo( points[ 0 ].x * 100, points[ 0 ].y * 100 );
+			ctx.moveTo( points[ 0 ].x * 100 + center.x, points[ 0 ].y * 100 + center.y );
 
 			for ( let i: number = 1; i < points.length; i++ ) {
 
-				ctx.lineTo( points[ i ].x * 100, points[ i ].y * 100 );
+				ctx.lineTo( points[ i ].x * 100 + center.x, points[ i ].y * 100 + center.y );
 
 			}
 
 			ctx.closePath();
 
-			ctx.fillStyle = 'red';
 			ctx.lineWidth = 2;
 			ctx.strokeStyle = 'blue';
 
@@ -173,6 +172,8 @@ export class Renderer extends AbstractRenderer {
 				this.drawHexagon(
 
 					ctx,
+					canvas.clientWidth,
+					canvas.clientHeight,
 					scene,
 					hex
 

@@ -2,7 +2,12 @@
 
   <div class="layout">
     
-	<Sferka />
+	<Sferka
+	
+		width="600"
+		height="600"
+	
+	/>
 
   </div>
 
