@@ -1,6 +1,6 @@
 import { type IPoint3D } from './point-3d';
 
-export interface IHex {
+export interface IPolygon {
 
 	points: [
 		
@@ -8,8 +8,6 @@ export interface IHex {
 		IPoint3D,
 		IPoint3D,
 		IPoint3D,
-		IPoint3D,
-		IPoint3D
 	
 	];
 

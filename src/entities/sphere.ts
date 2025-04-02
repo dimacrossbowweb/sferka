@@ -1,13 +1,15 @@
-import { type IHex, type IPoint3D } from '../interfaces';
+import { type IPolygon, type IPoint3D } from '../interfaces';
 import { AbstractSphere } from '../abstracts';
 
 export class Sphere extends AbstractSphere {
 
-	hexagons!: IHex[];
+	geometry!: IPolygon[];
 
 	radius!: number;
 
-	constructor ( radius: number, count: number ) {
+	details!: number;
+
+	constructor ( radius: number, details: number ) {
 
 		super();
 
@@ -19,17 +21,18 @@ export class Sphere extends AbstractSphere {
 
 			} 
 
-			if ( typeof count !== 'number' || count <= 0 ) {
+			if ( typeof details !== 'number' || details <= 0 ) {
 
-				throw new Error( 'Sphere -> constructor :: invalid count' );
+				throw new Error( 'Sphere -> constructor :: invalid details' );
 
 			}
 
-			this.hexagons = [];
-
-			this.generate();
+			this.geometry = [];
 
 			this.radius = radius;
+			this.details = details;
+
+			this.generate();
 
 		} catch ( e: unknown ) {
 
@@ -39,95 +42,57 @@ export class Sphere extends AbstractSphere {
 
 	}
 
-	private generate ( radius: number = 1, numHexagons: number = 20 ): void {
+	private generate (): void {
 
+		const points: IPoint3D[][] = [];
 
-function createTruncatedIcosahedronHexagons( radius: number = 1 ): IHex[] {
-		// Золотое сечение
-		const phi = (1 + Math.sqrt(5)) / 2;
+		this.geometry = [];
 
-		// Вершины усечённого икосаэдра
-		const vertices: IPoint3D[] = [
-			// Вершины икосаэдра
-			{ x: 1, y: phi, z: 0 }, { x: -1, y: phi, z: 0 },
-			{ x: 1, y: -phi, z: 0 }, { x: -1, y: -phi, z: 0 },
-			{ x: phi, y: 0, z: 1 }, { x: phi, y: 0, z: -1 },
-			{ x: -phi, y: 0, z: 1 }, { x: -phi, y: 0, z: -1 },
-			{ x: 0, y: 1, z: phi }, { x: 0, y: -1, z: phi },
-			{ x: 0, y: 1, z: -phi }, { x: 0, y: -1, z: -phi },
-			// Дополнительные вершины для усечения
-			{ x: 1, y: 0, z: phi }, { x: -1, y: 0, z: phi },
-			{ x: 1, y: 0, z: -phi }, { x: -1, y: 0, z: -phi },
-			{ x: phi, y: 1, z: 0 }, { x: -phi, y: 1, z: 0 },
-			{ x: phi, y: -1, z: 0 }, { x: -phi, y: -1, z: 0 },
-			{ x: 0, y: phi, z: 1 }, { x: 0, y: -phi, z: 1 },
-			{ x: 0, y: phi, z: -1 }, { x: 0, y: -phi, z: -1 }
-		];
+		for ( let i: number = 0; i < this.details; i++ ) {
 
-		// Нормализуем вершины на радиус 1
-		vertices.forEach(vertex => {
-			const norm = Math.sqrt(vertex.x ** 2 + vertex.y ** 2 + vertex.z ** 2);
-			vertex.x /= norm;
-			vertex.y /= norm;
-			vertex.z /= norm;
-		});
+			points.push( [] );
 
-		// Создаем шестиугольники
-		const hexagons: IHex[] = [];
+			for ( let j: number = 0; j < this.details; j++ ) {
 
-		console.log( '>>' );
+				const u = i / this.details;
+				const v = j / this.details;
+				const theta = 2 * Math.PI * u;
+				const phi = Math.acos(2 * v - 1);
 
-		console.log( vertices.slice(0, 6) );
+				points[ i ].push( {
 
-		// Пример: создаем шестиугольник из первых 6 вершин (для демонстрации)
-		hexagons.push({ points: vertices.slice(0, 6) });
+					x: Math.sin( phi ) * Math.cos( theta ),
+					y: Math.sin( phi ) * Math.sin( theta ),
+					z: Math.cos( phi )
 
-		// Добавьте дополнительные шестиугольники, используя другие комбинации вершин
-		// Например, для создания всех шестиугольников, вписанных в усечённый икосаэдр,
-		// вам нужно будет определить правильные комбинации вершин.
-
-		return hexagons;
-		}
-
-		// Создаем массив шестиугольников
-		this.hexagons = createTruncatedIcosahedronHexagons();
-
-		console.log( 'HEX' );
-		console.log( this.hexagons );
-
-		this.hexagons = [
-
-			{
-
-				points: [
-					
-					{ x: 1, y: 0, z: 0 },
-					{ x: 0.5, y: 0.87, z: 0 },
-					{ x: -0.5, y: 0.87, z: 0 },
-					{ x: -1, y: 0, z: 0 },
-					{ x: -0.5, y: -0.87, z: 0 },
-					{ x: 0.5, y: -0.87, z: 0 },
-
-				]
-
-			},
-
-			{
-
-				points: [
-					
-					{ x: 1 * Math.cos( 1 ), y: 0 * Math.sin( 1 ), z: 0 },
-					{ x: 0.5 * Math.cos( 1 ), y: 0.87 * Math.sin( 1 ), z: 0 },
-					{ x: -0.5 * Math.cos( 1 ), y: 0.87 * Math.sin( 1 ), z: 0 },
-					{ x: -1 * Math.cos( 1 ), y: 0 * Math.sin( 1 ), z: 0 },
-					{ x: -0.5 * Math.cos( 1 ), y: -0.87 * Math.sin( 1 ), z: 0 },
-					{ x: 0.5 * Math.cos( 1 ), y: -0.87 * Math.sin( 1 ), z: 0 },
-
-				]
+				} );
 
 			}
 
-		];
+		}
+
+		for ( let i: number = 1; i < this.details; i++ ) {
+
+			for ( let j: number = 0; j < this.details - 1; j++ ) {
+
+				const polygon: IPolygon = {
+
+					points: [
+
+						points[ i - 1 ][ j ],
+						points[ i - 1 ][ j + 1 ],
+						points[ i ][ j + 1 ],
+						points[ i ][ j ],
+
+					]
+
+				};
+
+				this.geometry.push( polygon );
+
+			}
+
+		}
 
 	}
 

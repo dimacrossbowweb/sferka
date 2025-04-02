@@ -1,9 +1,11 @@
-import { type IHex } from './hex';
+import { type IPolygon } from './polygon';
 
 export interface ISphere {
 
-	hexagons: IHex[];
+	geometry: IPolygon[];
 
 	radius: number;
+
+	details: number;
 
 };

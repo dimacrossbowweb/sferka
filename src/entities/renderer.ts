@@ -1,7 +1,6 @@
-import { type IPoint2D, type IPoint3D } from '../interfaces';
+import { type IPoint2D, type IPoint3D, type IPolygon } from '../interfaces';
 import { type TRotateMatrix } from '../types/rotate-matrix';
 import { type TVector } from '../types/vector';
-import { type IHex } from '../interfaces';
 import { AbstractRenderer } from '../abstracts/renderer.d';
 import { Camera } from './camera';
 import { Math3D } from '../utils/math-3d';
@@ -82,13 +81,13 @@ export class Renderer extends AbstractRenderer {
 
 	}
 
-	private drawHexagon (
+	private drawPolygon (
 		
 		ctx: CanvasRenderingContext2D,
 		width: number,
 		height: number,
 		scene: Scene,
-		hex: IHex
+		polygon: IPolygon
 	
 	): void {
 
@@ -102,12 +101,10 @@ export class Renderer extends AbstractRenderer {
 
 			const points: IPoint2D[] = [
 				
-				this.projection( scene.camera, hex.points[ 0 ] ),
-				this.projection( scene.camera, hex.points[ 1 ] ),
-				this.projection( scene.camera, hex.points[ 2 ] ),
-				this.projection( scene.camera, hex.points[ 3 ] ),
-				this.projection( scene.camera, hex.points[ 4 ] ),
-				this.projection( scene.camera, hex.points[ 5 ] )
+				this.projection( scene.camera, polygon.points[ 0 ] ),
+				this.projection( scene.camera, polygon.points[ 1 ] ),
+				this.projection( scene.camera, polygon.points[ 2 ] ),
+				this.projection( scene.camera, polygon.points[ 3 ] ),
 
 			];
 
@@ -118,18 +115,18 @@ export class Renderer extends AbstractRenderer {
 
 			ctx.beginPath();
 
-			ctx.moveTo( points[ 0 ].x * size + center.x, points[ 0 ].y * size + center.y );
+			ctx.moveTo( points[ 0 ].x * size * scene.camera.z + center.x, points[ 0 ].y * size * scene.camera.z + center.y );
 
 			for ( let i: number = 1; i < points.length; i++ ) {
 
-				ctx.lineTo( points[ i ].x * size + center.x, points[ i ].y * size + center.y );
+				ctx.lineTo( points[ i ].x * size * scene.camera.z + center.x, points[ i ].y * size * scene.camera.z + center.y );
 
 			}
 
 			ctx.closePath();
 
 			ctx.lineWidth = 2;
-			ctx.strokeStyle = 'blue';
+			ctx.strokeStyle = 'orange';
 
 			ctx.stroke();
 
@@ -167,17 +164,17 @@ export class Renderer extends AbstractRenderer {
 
 			this.clear( ctx, canvas.width, canvas.height );
 
-			const hexagons: IHex[] = scene?.sphere?.hexagons || [];
+			const geometry: IPolygon[] = scene?.sphere?.geometry || [];
 
-			hexagons.forEach( ( hex: IHex ) => {
+			geometry.forEach( ( polygon: IPolygon ) => {
 
-				this.drawHexagon(
+				this.drawPolygon(
 
 					ctx,
 					canvas.clientWidth,
 					canvas.clientHeight,
 					scene,
-					hex
+					polygon
 
 				);
 

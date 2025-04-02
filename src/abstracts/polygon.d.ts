@@ -9,8 +9,6 @@ export abstract class AbstractHex implements IHex {
 		AbstractPoint3D,
 		AbstractPoint3D,
 		AbstractPoint3D,
-		AbstractPoint3D,
-		AbstractPoint3D
 	
 	];
 

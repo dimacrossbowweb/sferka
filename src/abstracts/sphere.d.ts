@@ -1,9 +1,11 @@
-import { type ISphere } from '../interfaces';
+import { type ISphere, type IPolygon } from '../interfaces';
 
 export abstract class AbstractSphere implements ISphere {
 
-	abstract hexagons: IHex[];
+	abstract geometry: IPolygon[];
 
 	abstract radius: number;
+
+	abstract details: number;
 
 };
