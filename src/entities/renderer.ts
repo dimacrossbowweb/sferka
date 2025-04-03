@@ -120,11 +120,11 @@ export class Renderer extends AbstractRenderer {
 
 			ctx.lineWidth = 2;
 			ctx.strokeStyle = '#ffffff';
-			ctx.fillStyle = '#930243ee';
+			ctx.fillStyle = polygon.color;
 
 			ctx.fill();
 
-			ctx.stroke();
+			// ctx.stroke();
 
 		} catch ( e: unknown ) {
 
@@ -175,7 +175,9 @@ export class Renderer extends AbstractRenderer {
 						this.projection( scene.camera, polygon.points[ 2 ] ),
 						this.projection( scene.camera, polygon.points[ 3 ] ),
 
-					]
+					],
+
+					color: polygon.color,
 
 				};
 

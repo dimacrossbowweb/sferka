@@ -52,7 +52,7 @@ const { width: boxWidth, height: boxHeight } = useElementSize( box );
 const bxWidth = computed( () => `${ boxWidth.value }px` );
 const bxHeight = computed( () => `${ boxHeight.value }px` );
 
-const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 25 );
+const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 16 );
 
 const camera: Sferka.Camera = new Sferka.Camera( {
 
@@ -102,7 +102,7 @@ onMounted( (): void => {
 		scene.camera.pitch += 0.01;
 		// scene.camera.yaw += 0.01;
 		scene.camera.yaw += 0.02;
-		// scene.camera.roll += 0.01;
+		scene.camera.roll += 0.01;
 
 		// scene.camera.z -= 0.01;
 

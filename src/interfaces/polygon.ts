@@ -11,4 +11,6 @@ export interface IPolygon {
 	
 	];
 
+	color: string;
+
 };

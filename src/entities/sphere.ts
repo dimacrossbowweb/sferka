@@ -88,7 +88,11 @@ export class Sphere extends AbstractSphere {
 						points[ i ][ nextJ ],
 						points[ i ][ j ],
 
-					]
+					],
+
+					color: i % 2 && (j % 2) || !( i % 2 ) && !(j % 2) ? 'black' : 'white',
+
+					// color: `rgb(${ Math.round( Math.random() * 255 ) }, ${ Math.round( Math.random() * 255 ) }, ${ Math.round( Math.random() * 255 ) })`
 
 				};
 
