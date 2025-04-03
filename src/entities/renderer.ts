@@ -25,7 +25,7 @@ export class Renderer extends AbstractRenderer {
 		camera: Camera,
 		point3d: IPoint3D
 	
-	): IPoint2D {
+	): IPoint3D {
 
 		const rotateZMatrix: TRotateMatrix = Math3D.rotateMatrixZ( camera.roll );
 		const rotateXMatrix: TRotateMatrix = Math3D.rotateMatrixX( camera.pitch );
@@ -43,10 +43,11 @@ export class Renderer extends AbstractRenderer {
 			));
 
 
-		const point: IPoint2D = {
+		const point: IPoint3D = {
 
 			x: rotatedPoint[ 0 ],
 			y: rotatedPoint[ 1 ],
+			z: rotatedPoint[ 2 ],
 		
 		};
 
@@ -99,16 +100,8 @@ export class Renderer extends AbstractRenderer {
 
 			}
 
-			const points: IPoint2D[] = [
-				
-				this.projection( scene.camera, polygon.points[ 0 ] ),
-				this.projection( scene.camera, polygon.points[ 1 ] ),
-				this.projection( scene.camera, polygon.points[ 2 ] ),
-				this.projection( scene.camera, polygon.points[ 3 ] ),
+			const points: IPoint3D[] = polygon.points;
 
-			];
-
-			// const center: IPoint2D = { x: 0, y: 0 };
 			const center: IPoint2D = { x: Math.round( width / 2 ), y: Math.round( height / 2 ) };
 
 			const size: number = Math.min( width / 2, height / 2 );
@@ -126,7 +119,10 @@ export class Renderer extends AbstractRenderer {
 			ctx.closePath();
 
 			ctx.lineWidth = 2;
-			ctx.strokeStyle = 'orange';
+			ctx.strokeStyle = '#ffffff';
+			ctx.fillStyle = '#930243ee';
+
+			ctx.fill();
 
 			ctx.stroke();
 
@@ -166,7 +162,30 @@ export class Renderer extends AbstractRenderer {
 
 			const geometry: IPolygon[] = scene?.sphere?.geometry || [];
 
+			const projectionBuffer: IPolygon[] = [];
+
 			geometry.forEach( ( polygon: IPolygon ) => {
+
+				const projectionPolygon: IPolygon = {
+
+					points: [
+					
+						this.projection( scene.camera, polygon.points[ 0 ] ),
+						this.projection( scene.camera, polygon.points[ 1 ] ),
+						this.projection( scene.camera, polygon.points[ 2 ] ),
+						this.projection( scene.camera, polygon.points[ 3 ] ),
+
+					]
+
+				};
+
+				projectionBuffer.push( projectionPolygon );
+
+			} );
+
+			const zBuffer: IPolygon[] = Math3D.zBuffer( projectionBuffer );
+
+			zBuffer.forEach( ( polygon: IPolygon ) => {
 
 				this.drawPolygon(
 

@@ -1,5 +1,6 @@
 import { type TRotateMatrix } from '../types/rotate-matrix';
 import { type TVector } from '../types/vector';
+import { type IPoint3D, type IPolygon } from '../interfaces';
 
 export class Math3D {
 
@@ -59,6 +60,22 @@ export class Math3D {
 		];
 
 		return result;
+
+	}
+
+	static zBuffer( geometry: IPolygon[] ): IPolygon[] {
+
+		return geometry.sort( ( p1: IPolygon, p2: IPolygon ) => {
+
+			const p1Depth: number = p1.points.reduce( ( i: number, j: IPoint3D ) => i + j.z, 0 ) / 4;
+			const p2Depth: number = p2.points.reduce( ( i: number, j: IPoint3D ) => i + j.z, 0 ) / 4;
+
+			if ( p1Depth > p2Depth ) return 1;
+			if ( p1Depth < p2Depth ) return -1;
+
+			return 0;
+
+		} );
 
 	}
 

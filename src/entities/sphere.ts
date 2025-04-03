@@ -48,11 +48,11 @@ export class Sphere extends AbstractSphere {
 
 		this.geometry = [];
 
-		for ( let i: number = 0; i < this.details; i++ ) {
+		for ( let i: number = 0; i <= this.details; i++ ) {
 
 			points.push( [] );
 
-			for ( let j: number = 0; j < this.details; j++ ) {
+			for ( let j: number = 0; j <= this.details; j++ ) {
 
 				const u = i / this.details;
 				const v = j / this.details;
@@ -71,17 +71,21 @@ export class Sphere extends AbstractSphere {
 
 		}
 
-		for ( let i: number = 1; i < this.details; i++ ) {
+		for ( let i: number = 1; i <= this.details; i++ ) {
 
-			for ( let j: number = 0; j < this.details - 1; j++ ) {
+			const prevI: number = i <= this.details ? i - 1 : 0;
+
+			for ( let j: number = 0; j < this.details ; j++ ) {
+
+				const nextJ: number = j <= this.details ? j + 1 : 0;
 
 				const polygon: IPolygon = {
 
 					points: [
 
-						points[ i - 1 ][ j ],
-						points[ i - 1 ][ j + 1 ],
-						points[ i ][ j + 1 ],
+						points[ prevI ][ j ],
+						points[ prevI ][ nextJ ],
+						points[ i ][ nextJ ],
 						points[ i ][ j ],
 
 					]
