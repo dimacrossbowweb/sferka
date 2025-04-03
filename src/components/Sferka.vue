@@ -31,6 +31,10 @@ interface IProps {
 
 	width?: string | number;
 	height?: string | number;
+	details?: number;
+	yaw?: number;
+	pitch?: number;
+	roll?: number;
 
 };
 
@@ -38,6 +42,10 @@ const props = withDefaults( defineProps<IProps>(), {
 
 	width: '100%',
 	height: '100%',
+	details: 20,
+	yaw: 0,
+	pitch: 0,
+	roll: 0,
 
 } );
 
@@ -52,7 +60,7 @@ const { width: boxWidth, height: boxHeight } = useElementSize( box );
 const bxWidth = computed( () => `${ boxWidth.value }px` );
 const bxHeight = computed( () => `${ boxHeight.value }px` );
 
-const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 16 );
+const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 4 );
 
 const camera: Sferka.Camera = new Sferka.Camera( {
 
@@ -63,7 +71,15 @@ const camera: Sferka.Camera = new Sferka.Camera( {
 
 } );
 
-const scene: Sferka.Scene = new Sferka.Scene( camera, sphere );
+const light: Sferka.Light = new Sferka.Light( {
+
+	yaw: 0,
+	pitch: 0,
+	roll: 1,
+
+} );
+
+const scene: Sferka.Scene = new Sferka.Scene( camera, light, sphere );
 
 const renderer: Sferka.Renderer = new Sferka.Renderer();
 
@@ -72,6 +88,12 @@ watchEffect( () => {
 	if ( boxWidth.value > 0 && boxHeight.value > 0 ) {
 
 		renderer.render( canvas.value, scene );
+
+	}
+
+	if ( props.details > 2 ) {
+
+		scene.sphere.setDetails( props.details );
 
 	}
 
@@ -99,10 +121,13 @@ onMounted( (): void => {
 
 	setInterval( () => {
 
-		scene.camera.pitch += 0.01;
+		// scene.light.pitch += 0.01;
 		// scene.camera.yaw += 0.01;
-		scene.camera.yaw += 0.02;
-		scene.camera.roll += 0.01;
+		// scene.light.yaw += 0.02;
+		// scene.light.roll += 0.01;
+		scene.camera.yaw += props.yaw;
+		scene.camera.pitch += props.pitch;
+		scene.camera.roll += props.roll;
 
 		// scene.camera.z -= 0.01;
 
@@ -129,8 +154,6 @@ onMounted( (): void => {
 		position: relative;
 
 		box-sizing: border-box;
-
-		border: 2px solid blue;
 
 	}
 

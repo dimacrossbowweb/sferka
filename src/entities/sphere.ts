@@ -104,5 +104,13 @@ export class Sphere extends AbstractSphere {
 
 	}
 
+	setDetails ( details: number = 10 ): void {
+
+		this.details = details;
+
+		this.generate();
+
+	}
+
 };
 

@@ -118,9 +118,17 @@ export class Renderer extends AbstractRenderer {
 
 			ctx.closePath();
 
-			ctx.lineWidth = 2;
+			ctx.lineWidth = 0;
 			ctx.strokeStyle = '#ffffff';
-			ctx.fillStyle = polygon.color;
+
+			const light: number = Math3D.light( polygon, scene.light ) / ( Math.PI * 2 );
+
+			// console.log( light );
+
+			// console.log( Math3D.light( polygon, scene.light ) );
+
+			// ctx.fillStyle = polygon.color;
+			ctx.fillStyle = `rgb( ${ Math.round( 0 * light ) }, ${ Math.round( 255 * light ) }, ${ Math.round( 150 * light ) } )`;
 
 			ctx.fill();
 
