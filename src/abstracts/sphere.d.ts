@@ -8,4 +8,6 @@ export abstract class AbstractSphere implements ISphere {
 
 	abstract details: number;
 
+	abstract color: string;
+
 };

@@ -6,3 +6,4 @@ export * from './camera.d';
 export * from './light.d';
 export * from './scene.d';
 export * from './renderer.d';
+export * from './color.d';

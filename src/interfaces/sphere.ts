@@ -8,4 +8,6 @@ export interface ISphere {
 
 	details: number;
 
+	color: string;
+
 };

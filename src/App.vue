@@ -10,6 +10,7 @@
 		:yaw="+yaw"
 		:pitch="+pitch"
 		:roll="+roll"
+		:color="color"
 	
 	/>
 
@@ -86,6 +87,20 @@
 
 		</div>
 
+		<div style="margin-top: 25px">
+
+			<label for="color" style="color: white">Color: </label>
+
+			<input
+
+				v-model="color"
+				name="color"
+				type="color"
+
+			/>
+
+		</div>
+
 	</div>
 
   </div>
@@ -101,6 +116,7 @@ const details = ref( 3 );
 const yaw = ref( 0 );
 const pitch = ref( 0 );
 const roll = ref( 0 );
+const color = ref( '#ffffff' );
 
 </script>
 

@@ -26,15 +26,14 @@ import * as Sferka from '../entities';
 import { type ICamera } from '../interfaces/camera'; 
 import { ref, computed, onMounted, watchEffect } from 'vue';
 import { useElementSize } from '@vueuse/core';
+import { useRotating } from '../composables/rotating';
 
 interface IProps {
 
 	width?: string | number;
 	height?: string | number;
 	details?: number;
-	yaw?: number;
-	pitch?: number;
-	roll?: number;
+	color?: string;
 
 };
 
@@ -43,9 +42,7 @@ const props = withDefaults( defineProps<IProps>(), {
 	width: '100%',
 	height: '100%',
 	details: 20,
-	yaw: 0,
-	pitch: 0,
-	roll: 0,
+	color: '#ffffff'
 
 } );
 
@@ -56,6 +53,8 @@ const width = computed( (): string => Formatted.formatValues( props.width ) );
 const height = computed( (): string => Formatted.formatValues( props.height ) );
 
 const { width: boxWidth, height: boxHeight } = useElementSize( box );
+
+const { yaw, pitch } = useRotating( box );
 
 const bxWidth = computed( () => `${ boxWidth.value }px` );
 const bxHeight = computed( () => `${ boxHeight.value }px` );
@@ -85,7 +84,16 @@ const renderer: Sferka.Renderer = new Sferka.Renderer();
 
 watchEffect( () => {
 
-	if ( boxWidth.value > 0 && boxHeight.value > 0 ) {
+	// if ( boxWidth.value > 0 && boxHeight.value > 0 ) {
+
+	// 	renderer.render( canvas.value, scene );
+
+	// }
+
+	if ( yaw.value || pitch.value ) {
+
+		scene.camera.yaw = yaw.value;
+		scene.camera.pitch = pitch.value;
 
 		renderer.render( canvas.value, scene );
 
@@ -94,6 +102,12 @@ watchEffect( () => {
 	if ( props.details > 2 ) {
 
 		scene.sphere.setDetails( props.details );
+
+	}
+
+	if ( props.color ) {
+
+		scene.sphere.setColor( props.color );
 
 	}
 
@@ -119,21 +133,15 @@ onMounted( (): void => {
 
 	renderer.render( canvas.value, scene );
 
-	setInterval( () => {
+	// setInterval( () => {
 
-		// scene.light.pitch += 0.01;
-		// scene.camera.yaw += 0.01;
-		// scene.light.yaw += 0.02;
-		// scene.light.roll += 0.01;
-		scene.camera.yaw += props.yaw;
-		scene.camera.pitch += props.pitch;
-		scene.camera.roll += props.roll;
+	// 	scene.camera.yaw += props.yaw;
+	// 	scene.camera.pitch += props.pitch;
+	// 	scene.camera.roll += props.roll;
 
-		// scene.camera.z -= 0.01;
+	// 	renderer.render( canvas.value, scene );
 
-		renderer.render( canvas.value, scene );
-
-	}, 10 );
+	// }, 10 );
 
 } );
 

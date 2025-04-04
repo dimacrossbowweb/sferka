@@ -4,3 +4,4 @@ export * from './polygon';
 export * from './sphere';
 export * from './camera';
 export * from './light';
+export * from './color';

@@ -1,10 +1,11 @@
-import { type IPoint2D, type IPoint3D, type IPolygon } from '../interfaces';
+import { type IPoint2D, type IPoint3D, type IPolygon, type IColor } from '../interfaces';
 import { type TRotateMatrix } from '../types/rotate-matrix';
 import { type TVector } from '../types/vector';
 import { AbstractRenderer } from '../abstracts/renderer.d';
 import { Camera } from './camera';
 import { Math3D } from '../utils/math-3d';
 import { Scene } from './scene';
+import { ColorParser } from '../utils/parsers/color';
 
 export class Renderer extends AbstractRenderer {
 
@@ -128,7 +129,12 @@ export class Renderer extends AbstractRenderer {
 			// console.log( Math3D.light( polygon, scene.light ) );
 
 			// ctx.fillStyle = polygon.color;
-			ctx.fillStyle = `rgb( ${ Math.round( 0 * light ) }, ${ Math.round( 255 * light ) }, ${ Math.round( 150 * light ) } )`;
+
+			console.log( 'polygon.color = ', polygon.color );
+
+			const parsedColor: IColor = ColorParser.parse( polygon.color );
+
+			ctx.fillStyle = `rgb( ${ Math.round( parsedColor.r * light ) }, ${ Math.round( parsedColor.g * light ) }, ${ Math.round( parsedColor.b * light ) } )`;
 
 			ctx.fill();
 

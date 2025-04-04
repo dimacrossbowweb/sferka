@@ -9,7 +9,9 @@ export class Sphere extends AbstractSphere {
 
 	details!: number;
 
-	constructor ( radius: number, details: number ) {
+	color!: string;
+
+	constructor ( radius: number, details: number, color: string ) {
 
 		super();
 
@@ -31,6 +33,7 @@ export class Sphere extends AbstractSphere {
 
 			this.radius = radius;
 			this.details = details;
+			this.color = color;
 
 			this.generate();
 
@@ -90,7 +93,7 @@ export class Sphere extends AbstractSphere {
 
 					],
 
-					color: i % 2 && (j % 2) || !( i % 2 ) && !(j % 2) ? 'black' : 'white',
+					color: this.color,
 
 					// color: `rgb(${ Math.round( Math.random() * 255 ) }, ${ Math.round( Math.random() * 255 ) }, ${ Math.round( Math.random() * 255 ) })`
 
@@ -109,6 +112,14 @@ export class Sphere extends AbstractSphere {
 		this.details = details;
 
 		this.generate();
+
+	}
+
+	setColor ( color: string = '#ffffff' ): void {
+
+		this.color = color;
+
+		this.geometry.forEach( ( polygon: IPolygon ) => polygon.color = color );
 
 	}
 
