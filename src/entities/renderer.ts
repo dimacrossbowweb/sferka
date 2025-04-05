@@ -122,7 +122,9 @@ export class Renderer extends AbstractRenderer {
 			ctx.lineWidth = 0;
 			ctx.strokeStyle = '#ffffff';
 
-			const light: number = Math3D.light( polygon, scene.light ) / ( Math.PI * 2 );
+			let light: number = Math3D.light( polygon, scene.light ) / ( Math.PI * 2 );
+
+			light = light < 0.2 ? 0.2 : light;
 
 			// console.log( light );
 
@@ -174,7 +176,7 @@ export class Renderer extends AbstractRenderer {
 
 			this.clear( ctx, canvas.width, canvas.height );
 
-			const geometry: IPolygon[] = scene?.sphere?.geometry || [];
+			const geometry: IPolygon[] = scene?.mesh?.geometry || [];
 
 			const projectionBuffer: IPolygon[] = [];
 

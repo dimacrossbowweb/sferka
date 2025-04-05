@@ -1,19 +1,15 @@
 import { type IPolygon, type IPoint3D } from '../interfaces';
-import { AbstractSphere } from '../abstracts';
+import { Mesh } from './mesh';
 
-export class Sphere extends AbstractSphere {
-
-	geometry!: IPolygon[];
+export class Sphere extends Mesh {
 
 	radius!: number;
 
 	details!: number;
 
-	color!: string;
-
 	constructor ( radius: number, details: number, color: string ) {
 
-		super();
+		super( color );
 
 		try {
 
@@ -29,11 +25,8 @@ export class Sphere extends AbstractSphere {
 
 			}
 
-			this.geometry = [];
-
 			this.radius = radius;
 			this.details = details;
-			this.color = color;
 
 			this.generate();
 

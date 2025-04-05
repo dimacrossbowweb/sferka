@@ -1,10 +1,10 @@
 import { type ICamera } from './camera';
-import { type ISphere } from './sphere';
+import { type IMesh } from './mesh';
 
 export interface IScene {
 
 	camera: ICamera;
 
-	sphere: ISphere;
+	mesh: IMesh;
 
 };

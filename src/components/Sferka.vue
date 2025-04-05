@@ -59,7 +59,8 @@ const { yaw, pitch } = useRotating( box );
 const bxWidth = computed( () => `${ boxWidth.value }px` );
 const bxHeight = computed( () => `${ boxHeight.value }px` );
 
-const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 4 );
+const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 4, '#ff0000' );
+const cube: Sferka.Cube = new Sferka.Cube( 1, 4, '#ff0000' );
 
 const camera: Sferka.Camera = new Sferka.Camera( {
 
@@ -80,6 +81,9 @@ const light: Sferka.Light = new Sferka.Light( {
 
 const scene: Sferka.Scene = new Sferka.Scene( camera, light, sphere );
 
+console.log( 'scene' );
+console.log( scene );
+
 const renderer: Sferka.Renderer = new Sferka.Renderer();
 
 watchEffect( () => {
@@ -99,15 +103,15 @@ watchEffect( () => {
 
 	}
 
-	if ( props.details > 2 ) {
+	// if ( props.details > 2 ) {
 
-		scene.sphere.setDetails( props.details );
+	// 	scene.sphere.setDetails( props.details );
 
-	}
+	// }
 
 	if ( props.color ) {
 
-		scene.sphere.setColor( props.color );
+		scene.mesh.setColor( props.color );
 
 	}
 

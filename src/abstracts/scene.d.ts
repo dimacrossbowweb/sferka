@@ -1,7 +1,7 @@
 import { type IScene, type IPoint2D } from '../interfaces';
 import { AbstractCamera } from './camera.d';
 import { AbstractLight } from './light.d';
-import { AbstractSphere } from './sphere.d';
+import { AbstractMesh } from './mesh.d';
 
 export abstract class AbstractScene implements IScene {
 
@@ -9,6 +9,6 @@ export abstract class AbstractScene implements IScene {
 	
 	abstract light: AbstractLight;
 
-	abstract sphere: AbstractSphere;
+	abstract mesh: AbstractMesh;
 
 };

@@ -1,7 +1,7 @@
 import { AbstractScene } from '../abstracts';
 import { Camera } from './camera';
 import { Light } from './light';
-import { Sphere } from './sphere';
+import { Mesh } from './mesh'
 
 export class Scene extends AbstractScene {
 
@@ -9,9 +9,9 @@ export class Scene extends AbstractScene {
 
 	light!: Light;
 
-	sphere!: Sphere;
+	mesh!: Mesh;
 
-	constructor ( camera: Camera, light: Light, sphere: Sphere ) {
+	constructor ( camera: Camera, light: Light, mesh: Mesh ) {
 
 		super();
 
@@ -29,15 +29,15 @@ export class Scene extends AbstractScene {
 
 			}
 
-			if ( !( sphere instanceof Sphere ) ) {
+			if ( !( mesh instanceof Mesh ) ) {
 
-				throw new Error( 'Scene -> constructor :: invalid sphere element' );
+				throw new Error( 'Scene -> constructor :: invalid mesh element' );
 
 			}
 
 			this.camera = camera;
 			this.light = light;
-			this.sphere = sphere;
+			this.mesh = mesh;
 
 		} catch ( e: unknown ) {
 

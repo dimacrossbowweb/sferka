@@ -1,8 +1,8 @@
 import { type IMesh } from './mesh';
 
-export interface ISphere extends IMesh {
+export interface ICube extends IMesh {
 
-	radius: number;
+	size: number;
 
 	details: number;
 
