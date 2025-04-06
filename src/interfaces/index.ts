@@ -4,6 +4,8 @@ export * from './polygon';
 export * from './mesh';
 export * from './sphere';
 export * from './cube';
+export * from './cylinder';
+export * from './cone';
 export * from './camera';
 export * from './light';
 export * from './color';

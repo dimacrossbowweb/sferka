@@ -5,3 +5,5 @@ export * from './scene';
 export * from './mesh';
 export * from './sphere';
 export * from './cube';
+export * from './cylinder';
+export * from './cone';

@@ -61,6 +61,8 @@ const bxHeight = computed( () => `${ boxHeight.value }px` );
 
 const sphere: Sferka.Sphere = new Sferka.Sphere( 1, 4, '#ff0000' );
 const cube: Sferka.Cube = new Sferka.Cube( 1, 4, '#ff0000' );
+const cylinder: Sferka.Cylinder = new Sferka.Cylinder( 1, 4, '#ff0000' );
+const cone: Sferka.Cone = new Sferka.Cone( 1, 4, '#ff0000' );
 
 const camera: Sferka.Camera = new Sferka.Camera( {
 
@@ -79,7 +81,7 @@ const light: Sferka.Light = new Sferka.Light( {
 
 } );
 
-const scene: Sferka.Scene = new Sferka.Scene( camera, light, sphere );
+const scene: Sferka.Scene = new Sferka.Scene( camera, light, cone );
 
 console.log( 'scene' );
 console.log( scene );
@@ -103,11 +105,11 @@ watchEffect( () => {
 
 	}
 
-	// if ( props.details > 2 ) {
+	if ( props.details > 2 ) {
 
-	// 	scene.sphere.setDetails( props.details );
+		scene.mesh.setDetails( props.details );
 
-	// }
+	}
 
 	if ( props.color ) {
 
